@@ -12,7 +12,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 
-
 class MyApp(App):
     count = False
     string = ''
@@ -37,7 +36,7 @@ class MyApp(App):
         self.count = False
 
     def press_close(self, instance):
-        #App.get_running_app().stop()
+        # App.get_running_app().stop()
         Window.close()
 
     def build(self):
@@ -59,18 +58,19 @@ class MyApp(App):
                                    font_size=20,
                                    on_press=self.press_encrypt,
                                    size_hint=[.5, 1],
-                                   background_color=[1, 0, 0, 1],
+                                   background_color=[1, .56, .05, 1],
                                    background_normal=""
                                    ))
         b_button.add_widget(Button(text="Decrypt",
                                    font_size=20,
                                    size_hint=[.5, 1],
                                    on_press=self.press_decrypt,
-                                   background_color=[1, 0, 25, 1],
+                                   background_color=[1, .56, .05, 1],
                                    background_normal=""
                                    ))
         b.add_widget(b_button)
-        self.message = Label(text="", halign="left", valign="top", font_size='20sp', size_hint=(.5, .5) , text_language = 'en')
+        self.message = Label(text="", halign="left", valign="top", font_size='20sp', size_hint=(.5, .5),
+                             text_language='en')
         self.message.bind(size=self.message.setter('text_size'))
         b.add_widget(self.message)
         self.key = Label(text="", halign="left", valign="top", font_size='20sp', size_hint=(.5, .5))
@@ -79,8 +79,8 @@ class MyApp(App):
         a1 = AnchorLayout(anchor_x='center', anchor_y='center', size_hint=[1, .3])
         btn = Button(text="Close",
                      font_size=20,
-                     size_hint=[.8, 1],
-                     background_color=[1, 0, 25, 1],
+                     size_hint=[.6, 1],
+                     background_color=[1, .14, 0, 1],
                      background_normal="",
                      padding=[20, 20]
                      )

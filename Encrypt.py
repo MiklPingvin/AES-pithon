@@ -21,17 +21,11 @@ def decrypt(user_tex, user_key, round=3):
         for t in range(round - 1, 0, -1):
             state = ShiftRows.shiftrows(state, False)
             state = SubBytes.subbytes(state, False)
-
             state = AddRoundKey.addroundkey(state, user_key, t)
-
             state = MixColumns.mixcolumns(state, False)
-
         state = ShiftRows.shiftrows(state, False)
-
         state = SubBytes.subbytes(state, False)
-
         state = AddRoundKey.addroundkey(state, user_key, 0)
-
         for i in range(16):
             out_array.append(state[i // 4][i % 4])
         for i in range(16):
@@ -77,11 +71,8 @@ def encrypt(user_text_in, user_key, round=3):
             state = MixColumns.mixcolumns(state)
             state = AddRoundKey.addroundkey(state, user_key, t)
         state = SubBytes.subbytes(state)
-
         state = ShiftRows.shiftrows(state)
-
         state = AddRoundKey.addroundkey(state, user_key, round)
-
         for i in range(16):
             out_array.append(state[i // 4][i % 4])
         for i in range(16):
@@ -93,7 +84,7 @@ def encrypt(user_text_in, user_key, round=3):
 
 
 # говно не читает русский
-#a = encrypt("ff", "ff")
+#a = encrypt("привет", "ff")
 #print(a)
 #b = decrypt(a, "ff")
 #print(b)
