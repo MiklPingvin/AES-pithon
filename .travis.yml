@@ -22,6 +22,6 @@ install:
   - yes | buildozer android debug
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $MyApp --file "bin/aes-0.1-armeabi-v8a-debug.apk" --tag_name "v.0.1"
+  - dpl releases --token $MyApp --file "bin/aes-0.1-armeabi-v7a-debug.apk" --tag_name "v.0.1"
   - echo "TODO 2"
 
