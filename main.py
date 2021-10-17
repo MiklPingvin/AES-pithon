@@ -36,8 +36,8 @@ class MyApp(App):
         self.key.text += self.user_key.text
         self.count = False
 
-    def press_close(self):
-        App.get_running_app().stop()
+    def press_close(self, instance):
+        #App.get_running_app().stop()
         Window.close()
 
     def build(self):

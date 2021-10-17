@@ -3,12 +3,15 @@ import ShiftRows
 import MixColumns
 import AddRoundKey
 
+rus = False
 
-def decrypt(user_tex, user_key, round=8):
+
+def decrypt(user_tex, user_key, round=3):
+    global rus
     print(user_tex)
     user_array = []
     for i in range(len(user_tex)):
-        user_array.append(ord(user_tex[i]) - 200)
+        user_array.append(ord(user_tex[i]) - 1000)
     state = [[0 for j in range(4)] for i in range(4)]
     out_array = []
     for q in range(0, len(user_array), 16):
@@ -18,18 +21,31 @@ def decrypt(user_tex, user_key, round=8):
         for t in range(round - 1, 0, -1):
             state = ShiftRows.shiftrows(state, False)
             state = SubBytes.subbytes(state, False)
+
             state = AddRoundKey.addroundkey(state, user_key, t)
+
             state = MixColumns.mixcolumns(state, False)
+
         state = ShiftRows.shiftrows(state, False)
+
         state = SubBytes.subbytes(state, False)
+
         state = AddRoundKey.addroundkey(state, user_key, 0)
+
         for i in range(16):
             out_array.append(state[i // 4][i % 4])
         for i in range(16):
             user_array.pop(0)
     out_text = ""
+
     for i in range(len(out_array)):
+        if out_array[i] == 95:
+            out_text += '_'
+            continue
+        if rus:
+            out_array[i] += 900
         out_text += chr(out_array[i])
+
     while True:
         if out_text[-1] == "_":
             out_text = out_text[:-1]
@@ -38,13 +54,17 @@ def decrypt(user_tex, user_key, round=8):
     return out_text
 
 
-def encrypt(user_text_in, user_key, round=8):
+def encrypt(user_text_in, user_key, round=3):
+    global rus
     print(user_text_in)
     if len(user_text_in) % 16 != 0:
         user_text_in += "_" * (16 - len(user_text_in) % 16)
     user_text = []
     for i in range(len(user_text_in)):
         user_text.append(ord(user_text_in[i]))
+        if user_text[i] > 1000:
+            user_text[i] = user_text[i] - 900
+            rus = True
     state = [[0 for j in range(4)] for i in range(4)]
     out_array = []
     for q in range(0, len(user_text), 16):
@@ -57,20 +77,23 @@ def encrypt(user_text_in, user_key, round=8):
             state = MixColumns.mixcolumns(state)
             state = AddRoundKey.addroundkey(state, user_key, t)
         state = SubBytes.subbytes(state)
+
         state = ShiftRows.shiftrows(state)
+
         state = AddRoundKey.addroundkey(state, user_key, round)
+
         for i in range(16):
             out_array.append(state[i // 4][i % 4])
         for i in range(16):
             user_text.pop(0)
     out_text = ""
     for i in range(len(out_array)):
-        out_text += chr(out_array[i] + 200)
+        out_text += chr(out_array[i] + 1000)
     return out_text
 
 
 # говно не читает русский
-#a = encrypt("привет", "привет")
+#a = encrypt("ff", "ff")
 #print(a)
-#b = decrypt(a, "привет")
+#b = decrypt(a, "ff")
 #print(b)

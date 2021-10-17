@@ -2,6 +2,7 @@ import Mul
 
 
 def mixcolumns(array, inv=True):
+    array2 = [[array[i][j] for j in range(4)] for i in range(4)]
     for i in range(len(array)):
         arr2 = [k for k in range(len(array))]
         if inv:
@@ -15,5 +16,5 @@ def mixcolumns(array, inv=True):
             arr2[2] = Mul.mul0d(array[0][i]) ^ Mul.mul09(array[1][i]) ^ Mul.mul0e(array[2][i]) ^ Mul.mul0b(array[3][i])
             arr2[3] = Mul.mul0b(array[0][i]) ^ Mul.mul0d(array[1][i]) ^ Mul.mul09(array[2][i]) ^ Mul.mul0e(array[3][i])
         for t in range(4):
-            array[t][i] = arr2[t]
-    return array
+            array2[t][i] = arr2[t]
+    return array2
